@@ -15,6 +15,10 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PROJECTS } from '../data';
+// @ts-ignore
+import santeflowImg from '../assets/images/santeflow.png';
+// @ts-ignore
+import iunImg from '../assets/images/iun_centralized.png';
 
 interface SelectedImage {
   src: string;
@@ -87,14 +91,14 @@ export default function Projects() {
                     {project.demoMockupType === 'santeflow' && (
                       <button 
                         onClick={() => setSelectedImage({
-                          src: "src/assets/images/santeflow.png",
+                          src: santeflowImg,
                           title: "SantéFlow - AI Health Platform",
                           desc: "AI-powered personalized health recommendation dashboard."
                         })}
                         className="w-full h-full relative overflow-hidden cursor-zoom-in group/img border-0 p-0 m-0 bg-transparent block"
                       >
                         <img 
-                          src="src/assets/images/santeflow.png" 
+                          src={santeflowImg} 
                           alt="SantéFlow App Showcase"
                           className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
                           referrerPolicy="no-referrer"
@@ -112,14 +116,14 @@ export default function Projects() {
                     {project.demoMockupType === 'iun' && (
                       <button 
                         onClick={() => setSelectedImage({
-                          src: "src/assets/images/iun_centralized.png",
+                          src: iunImg,
                           title: "IUN Centralized Communication & Resource Network",
                           desc: "Exclusively designed resource-sharing and collaborative network for staff and students."
                         })}
                         className="w-full h-full relative overflow-hidden cursor-zoom-in group/img border-0 p-0 m-0 bg-transparent block"
                       >
                         <img 
-                          src="src/assets/images/iun_centralized.png" 
+                          src={iunImg} 
                           alt="IUN Centralized Communication Network"
                           className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
                           referrerPolicy="no-referrer"

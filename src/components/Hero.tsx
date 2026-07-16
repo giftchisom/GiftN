@@ -12,6 +12,8 @@ import {
   Compass 
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+// @ts-ignore
+import profileImg from '../assets/6ca324e9-280a-4e7a-9462-229b6900dffd.png';
 
 interface HeroProps {
   onNavigate: (sectionId: string) => void;
@@ -19,8 +21,8 @@ interface HeroProps {
 
 export default function Hero({ onNavigate }: HeroProps) {
  
-  // Change this path to match your newly uploaded image file:
-const profileImgPath = 'src/assets/6ca324e9-280a-4e7a-9462-229b6900dffd.png';
+  // Reference the imported image asset directly
+  const profileImgPath = profileImg;
   
   const [text, setText] = React.useState('');
   const targetWord = "Gift Nneji";
