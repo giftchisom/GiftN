@@ -3,11 +3,6 @@ import {
   GraduationCap, 
   Award, 
   Globe, 
-  Terminal, 
-  Cpu, 
-  Database, 
-  Layout, 
-  Settings, 
   Workflow,
   ExternalLink,
   X,
@@ -17,13 +12,15 @@ import {
   Sparkles
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useLanguage } from '../context/LanguageContext';
+import FloatingTechStack from './FloatingTechStack';
 import { 
-  TECHNICAL_SKILLS, 
   EDUCATION, 
   CERTIFICATIONS 
 } from '../data';
 
 export default function About() {
+  const { language, t } = useLanguage();
   const [selectedCert, setSelectedCert] = useState<any>(null);
 
   useEffect(() => {
@@ -39,15 +36,19 @@ export default function About() {
   return (
     <section
       id="about"
-      className="py-24 px-6 md:px-16 lg:px-24 xl:px-32 bg-[#04010b]/60 border-t border-purple-950/10"
+      className="py-24 px-6 md:px-16 lg:px-24 xl:px-32 bg-transparent border-t border-purple-950/15"
     >
       <div className="max-w-5xl flex flex-col gap-12">
         
         {/* Section Heading */}
         <div className="flex flex-col gap-3">
-          <span className="font-mono text-xs text-purple-400 uppercase tracking-widest font-medium">01. Identity & Skills</span>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">About & Skills</h2>
-          <div className="h-[2px] w-16 bg-gradient-to-r from-purple-500 to-violet-600 rounded" />
+          <span className="font-mono text-xs text-purple-400 uppercase tracking-widest font-medium">
+            {t('about.badge')}
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">
+            {t('about.title')}
+          </h2>
+          <div className="h-[2px] w-16 bg-purple-500 rounded" />
         </div>
 
         {/* Identity & Background */}
@@ -78,49 +79,8 @@ export default function About() {
           </div>
         </div>
 
-        {/* Technical Tech Stack */}
-        <div className="flex flex-col gap-6">
-          <div className="flex items-center gap-2.5">
-            <Terminal size={18} className="text-purple-400" />
-            <h3 className="font-display font-semibold text-base sm:text-lg text-white">Technical Tech Stack</h3>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {TECHNICAL_SKILLS.map((cat) => {
-              const getIcon = (category: string) => {
-                if (category.includes('Languages')) return <Terminal size={14} className="text-purple-400" />;
-                if (category.includes('Backend')) return <Cpu size={14} className="text-violet-400" />;
-                if (category.includes('Data')) return <Database size={14} className="text-indigo-400" />;
-                if (category.includes('Frontend')) return <Layout size={14} className="text-fuchsia-400" />;
-                return <Settings size={14} className="text-purple-400" />;
-              };
-
-              return (
-                <div 
-                  key={cat.category}
-                  className="bg-zinc-950/40 border border-purple-950/20 p-5 rounded-xl flex flex-col gap-4 hover:border-purple-800/30 hover:bg-[#070411]/20 transition-all duration-300 group"
-                >
-                  <div className="flex items-center gap-2 pb-2.5 border-b border-purple-950/20">
-                    {getIcon(cat.category)}
-                    <h4 className="font-display font-medium text-xs text-gray-200 uppercase tracking-wider truncate">
-                      {cat.category}
-                    </h4>
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    {cat.skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="font-mono text-[10px] sm:text-xs text-gray-400 group-hover:text-gray-200 px-2 py-0.5 bg-[#090514]/40 border border-purple-950/30 rounded"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
+        {/* Interactive Technical Stack (Hover to Reveal) */}
+        <FloatingTechStack />
 
         {/* Product & Leadership Mindset */}
         <div className="flex flex-col gap-6">
@@ -249,10 +209,30 @@ export default function About() {
 
               {/* Certificate Preview Panel (Left or Top) */}
               <div className="w-full md:w-3/5 bg-[#070411] border-b md:border-b-0 md:border-r border-purple-950/30 p-6 sm:p-8 flex items-center justify-center overflow-y-auto min-h-[250px] md:min-h-0">
-                {selectedCert.id === 'cert-2' && selectedCert.link ? (
+                {selectedCert.id === 'cert-1' ? (
+                  /* Tech Savvy Summit Volunteering Certificate */
+                  <div className="relative group w-full flex flex-col items-center">
+                    <img
+                      src="/tech-savvy-certificate.svg"
+                      alt="Tech Savvy Summit Volunteering Certificate"
+                      referrerPolicy="no-referrer"
+                      className="max-w-full max-h-[50vh] rounded-lg shadow-2xl border border-purple-950/40 object-contain hover:scale-[1.01] transition-transform duration-300"
+                    />
+                  </div>
+                ) : selectedCert.id === 'cert-3' ? (
+                  /* CodeAlpha Bootcamp Completion Certificate */
+                  <div className="relative group w-full flex flex-col items-center">
+                    <img
+                      src="/codealpha-bootcamp.svg"
+                      alt="CodeAlpha Full Stack Development Bootcamp Certificate"
+                      referrerPolicy="no-referrer"
+                      className="max-w-full max-h-[50vh] rounded-lg shadow-2xl border border-purple-950/40 object-contain hover:scale-[1.01] transition-transform duration-300"
+                    />
+                  </div>
+                ) : selectedCert.id === 'cert-2' && selectedCert.link ? (
                   /* Udemy Image Certificate */
                   <div className="relative group w-full flex flex-col items-center">
-                    <div className="absolute inset-0 bg-gradient-to-tr from-purple-500/5 to-transparent rounded-lg pointer-events-none" />
+                    <div className="absolute inset-0 bg-purple-950/20 rounded-lg pointer-events-none" />
                     <img
                       src={selectedCert.link}
                       alt={selectedCert.name}
@@ -260,111 +240,7 @@ export default function About() {
                       className="max-w-full max-h-[45vh] rounded-lg shadow-2xl border border-purple-950/40 object-contain hover:scale-[1.01] transition-transform duration-300"
                     />
                   </div>
-                ) : selectedCert.id === 'cert-1' ? (
-                  /* Custom Designed HTML Certificate for Volunteer Recognition */
-                  <div className="w-full max-w-lg aspect-[1.414/1] bg-gradient-to-br from-zinc-900 via-stone-950 to-zinc-900 border-[8px] border-double border-amber-500/40 rounded p-6 sm:p-8 flex flex-col justify-between text-center relative overflow-hidden shadow-2xl select-none">
-                    {/* Watermark Logo */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none">
-                      <Award size={280} className="text-amber-500" />
-                    </div>
-                    
-                    {/* Top Decorative Corners */}
-                    <div className="absolute top-2 left-2 w-4 h-4 border-t border-l border-amber-500/30" />
-                    <div className="absolute top-2 right-2 w-4 h-4 border-t border-r border-amber-500/30" />
-                    <div className="absolute bottom-2 left-2 w-4 h-4 border-b border-l border-amber-500/30" />
-                    <div className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-amber-500/30" />
-
-                    <div className="flex flex-col gap-1 sm:gap-2">
-                      <span className="font-mono text-[9px] sm:text-xs text-amber-500 tracking-widest uppercase">Certificate of Appreciation</span>
-                      <h3 className="font-serif text-lg sm:text-2xl text-amber-100 font-bold tracking-tight">Recognition of Excellence</h3>
-                      <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-amber-500/50 to-transparent mx-auto mt-1" />
-                    </div>
-
-                    <div className="my-3 sm:my-5 flex flex-col gap-1 sm:gap-1.5">
-                      <p className="font-serif italic text-gray-400 text-[10px] sm:text-xs">This official recognition is proudly presented to</p>
-                      <h4 className="font-serif text-xl sm:text-2xl text-white font-extrabold tracking-wide drop-shadow-sm my-0.5">Gift Chisom Nneji</h4>
-                      <p className="text-gray-400 text-[9px] sm:text-[11px] leading-relaxed px-4 max-w-md mx-auto font-serif">
-                        for outstanding volunteer services, technical excellence, and dedication as <strong className="text-amber-500/90">Frontend Engineer & Web Development Lead</strong> for the PyCon Togo Africa website and the Tech Savvy Summit.
-                      </p>
-                    </div>
-
-                    <div className="flex justify-between items-end border-t border-amber-500/10 pt-4 mt-2">
-                      <div className="flex flex-col items-center gap-0.5">
-                        <span className="font-serif italic text-[8px] sm:text-[10px] text-gray-500">Authorized by</span>
-                        <div className="h-5 sm:h-6 flex items-center justify-center font-mono text-[10px] sm:text-xs text-amber-500/70 italic">TSS Committee</div>
-                        <div className="w-16 h-[0.5px] bg-gray-700" />
-                        <span className="font-mono text-[7px] sm:text-[9px] text-gray-500">Tech Savvy Summit</span>
-                      </div>
-                      
-                      {/* Golden Seal */}
-                      <div className="relative flex items-center justify-center">
-                        <div className="absolute w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-dashed border-amber-500/30 animate-spin-slow pointer-events-none" />
-                        <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-amber-400 to-yellow-600 flex items-center justify-center shadow-lg border border-amber-300/30">
-                          <Award size={14} className="text-zinc-950" />
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col items-center gap-0.5">
-                        <span className="font-serif italic text-[8px] sm:text-[10px] text-gray-500">Date Issued</span>
-                        <div className="h-5 sm:h-6 flex items-center justify-center font-mono text-[10px] sm:text-xs text-amber-500/80 font-bold">02 / 2026</div>
-                        <div className="w-16 h-[0.5px] bg-gray-700" />
-                        <span className="font-mono text-[7px] sm:text-[9px] text-gray-500">PyCon Togo Africa</span>
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  /* Custom Designed HTML Certificate for CodeAlpha Completion */
-                  <div className="w-full max-w-lg aspect-[1.414/1] bg-gradient-to-br from-zinc-900 via-slate-950 to-zinc-900 border-[8px] border-double border-purple-500/40 rounded p-6 sm:p-8 flex flex-col justify-between text-center relative overflow-hidden shadow-2xl select-none">
-                    {/* Watermark Logo */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none">
-                      <Award size={280} className="text-purple-500" />
-                    </div>
-                    
-                    {/* Top Decorative Corners */}
-                    <div className="absolute top-2 left-2 w-4 h-4 border-t border-l border-purple-500/30" />
-                    <div className="absolute top-2 right-2 w-4 h-4 border-t border-r border-purple-500/30" />
-                    <div className="absolute bottom-2 left-2 w-4 h-4 border-b border-l border-purple-500/30" />
-                    <div className="absolute bottom-2 right-2 w-4 h-4 border-b border-r border-purple-500/30" />
-
-                    <div className="flex flex-col gap-1 sm:gap-2">
-                      <span className="font-mono text-[9px] sm:text-xs text-purple-400 tracking-widest uppercase">Certificate of Completion</span>
-                      <h3 className="font-serif text-lg sm:text-2xl text-purple-100 font-bold tracking-tight">Full Stack Web Development</h3>
-                      <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-purple-500/50 to-transparent mx-auto mt-1" />
-                    </div>
-
-                    <div className="my-3 sm:my-5 flex flex-col gap-1 sm:gap-1.5">
-                      <p className="font-serif italic text-gray-400 text-[10px] sm:text-xs">This is proudly certified that</p>
-                      <h4 className="font-serif text-xl sm:text-2xl text-white font-extrabold tracking-wide drop-shadow-sm my-0.5">Gift Chisom Nneji</h4>
-                      <p className="text-gray-400 text-[9px] sm:text-[11px] leading-relaxed px-4 max-w-md mx-auto font-serif">
-                        has successfully completed the intensive <strong className="text-purple-400">CodeAlpha Software Development Bootcamp</strong> as a Full Stack Developer, acquiring professional hands-on expertise.
-                      </p>
-                    </div>
-
-                    <div className="flex justify-between items-end border-t border-purple-500/10 pt-4 mt-2">
-                      <div className="flex flex-col items-center gap-0.5">
-                        <span className="font-serif italic text-[8px] sm:text-[10px] text-gray-500">Verified Credentials</span>
-                        <div className="h-5 sm:h-6 flex items-center justify-center font-mono text-[9px] sm:text-xs text-purple-400/80 bg-purple-950/30 px-2 py-0.5 rounded border border-purple-900/30">ID: CA/DF1/91356</div>
-                        <div className="w-16 h-[0.5px] bg-gray-700" />
-                        <span className="font-mono text-[7px] sm:text-[9px] text-gray-500">Verification Center</span>
-                      </div>
-                      
-                      {/* Purple Seal */}
-                      <div className="relative flex items-center justify-center">
-                        <div className="absolute w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-dashed border-purple-500/30 animate-spin-slow pointer-events-none" />
-                        <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-lg border border-purple-300/30">
-                          <ShieldCheck size={14} className="text-white" />
-                        </div>
-                      </div>
-
-                      <div className="flex flex-col items-center gap-0.5">
-                        <span className="font-serif italic text-[8px] sm:text-[10px] text-gray-500">Bootcamp Registrar</span>
-                        <div className="h-5 sm:h-6 flex items-center justify-center font-mono text-[10px] sm:text-xs text-purple-400/80 font-bold">July 2026</div>
-                        <div className="w-16 h-[0.5px] bg-gray-700" />
-                        <span className="font-mono text-[7px] sm:text-[9px] text-gray-500">CodeAlpha Tech</span>
-                      </div>
-                    </div>
-                  </div>
-                )}
+                ) : null}
               </div>
 
               {/* Certificate Details Panel (Right or Bottom) */}

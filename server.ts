@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import fs from "fs";
 import { createServer as createViteServer } from "vite";
 import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
@@ -108,6 +109,91 @@ async function startServer() {
   const app = express();
 
   app.use(express.json());
+
+  // In-memory messages store for website backup
+  const receivedMessages: Array<{
+    id: string;
+    name: string;
+    email: string;
+    subject: string;
+    message: string;
+    date?: string;
+    time?: string;
+    receivedAt: string;
+    forwardedToGmail: boolean;
+  }> = [];
+
+  // API Route for Contact Form & Appointments (forwards straight to Gmail)
+  app.post("/api/contact", async (req, res) => {
+    try {
+      const { name, email, subject, message, date, time } = req.body;
+      if (!name || !email) {
+        return res.status(400).json({ error: "Name and email are required" });
+      }
+
+      console.log(`[CONTACT RECEIVED] From: ${name} <${email}>`);
+      console.log(`[SUBJECT]: ${subject || 'Direct Website Inquiry'}`);
+      console.log(`[MESSAGE/BOOKING]: ${message}`);
+
+      let forwarded = false;
+      try {
+        // Forward directly to Gift's Gmail inbox (giftchisomwork@gmail.com)
+        const formSubmitRes = await fetch("https://formsubmit.co/ajax/giftchisomwork@gmail.com", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify({
+            name,
+            email,
+            _replyto: email,
+            _subject: `Portfolio Message from ${name}: ${subject || 'Website Inquiry'}`,
+            message: date && time ? `${message}\n\n[Requested Appointment]: ${date} at ${time}` : message,
+            _template: "table"
+          })
+        });
+
+        if (formSubmitRes.ok) {
+          forwarded = true;
+          console.log("[CONTACT FORWARDED] Successfully forwarded to giftchisomwork@gmail.com");
+        } else {
+          console.warn("[CONTACT FORWARD WARNING] FormSubmit responded with", formSubmitRes.status);
+        }
+      } catch (fwdErr) {
+        console.error("[CONTACT FORWARD ERROR]", fwdErr);
+      }
+
+      const msgRecord = {
+        id: `msg_${Date.now()}`,
+        name,
+        email,
+        subject: subject || 'Direct Website Inquiry',
+        message: message || '',
+        date,
+        time,
+        receivedAt: new Date().toISOString(),
+        forwardedToGmail: forwarded
+      };
+      receivedMessages.unshift(msgRecord);
+
+      res.json({
+        success: true,
+        messageId: msgRecord.id,
+        forwardedToGmail: forwarded,
+        targetEmail: "giftchisomwork@gmail.com",
+        receivedAt: msgRecord.receivedAt,
+      });
+    } catch (error: any) {
+      console.error("Contact API Error:", error);
+      res.status(500).json({ error: "Failed to process contact message" });
+    }
+  });
+
+  // API Route to fetch received messages (for web inbox backup)
+  app.get("/api/messages", (_req, res) => {
+    res.json({ messages: receivedMessages });
+  });
 
   // API Route
   app.post("/api/chat", async (req, res) => {

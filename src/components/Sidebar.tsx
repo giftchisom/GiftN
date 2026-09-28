@@ -1,21 +1,24 @@
 import React from 'react';
-import { Github, Linkedin, Mail, Menu, X, Phone, FileText } from 'lucide-react';
+import { Github, Linkedin, Mail, Menu, X, Phone, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
+import { useLanguage } from '../context/LanguageContext';
 
 interface SidebarProps {
   activeSection: string;
   onNavigate: (sectionId: string) => void;
 }
 
-const NAV_ITEMS = [
-  { id: 'intro', label: 'Intro' },
-  { id: 'about', label: 'About & Skills' },
-  { id: 'experience', label: 'Experience' },
-  { id: 'projects', label: 'Featured Projects' }
-];
-
 export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
   const [isOpen, setIsOpen] = React.useState(false);
+  const { language, setLanguage, t } = useLanguage();
+
+  const navItems = [
+    { id: 'intro', label: t('nav.intro') },
+    { id: 'about', label: t('nav.about') },
+    { id: 'experience', label: t('nav.experience') },
+    { id: 'projects', label: t('nav.projects') },
+    { id: 'contact', label: t('nav.contact') }
+  ];
 
   const handleLinkClick = (id: string) => {
     onNavigate(id);
@@ -25,21 +28,50 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
   return (
     <>
       {/* Mobile Toggle Bar */}
-      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-[#060311]/90 backdrop-blur-md border-b border-purple-950/40 z-50 flex items-center justify-between px-6">
+      <div className="md:hidden fixed top-0 left-0 right-0 h-16 bg-[#03000a] border-b border-purple-950/30 z-50 flex items-center justify-between px-6">
         <button
           onClick={() => handleLinkClick('intro')}
           className="font-display font-bold text-lg tracking-wider text-purple-400 cursor-pointer"
         >
-        GIFT NNEJI
+          GIFT NNEJI
         </button>
-        <button
-          id="mobile-menu-toggle"
-          onClick={() => setIsOpen(!isOpen)}
-          className="text-gray-300 hover:text-purple-400 p-2 transition-colors cursor-pointer"
-          aria-label="Toggle navigation menu"
-        >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+
+        <div className="flex items-center gap-3">
+          {/* Mobile Language Switcher */}
+          <div className="inline-flex items-center bg-[#070214] border border-purple-900/50 rounded-lg p-0.5 shadow-sm">
+            <button
+              onClick={() => setLanguage('en')}
+              className={`px-2 py-0.5 rounded text-[10px] font-mono font-medium transition-colors cursor-pointer ${
+                language === 'en'
+                  ? 'bg-purple-600 text-white'
+                  : 'text-gray-400 hover:text-gray-200'
+              }`}
+              aria-label="Switch to English"
+            >
+              EN
+            </button>
+            <button
+              onClick={() => setLanguage('fr')}
+              className={`px-2 py-0.5 rounded text-[10px] font-mono font-medium transition-colors cursor-pointer ${
+                language === 'fr'
+                  ? 'bg-purple-600 text-white'
+                  : 'text-gray-400 hover:text-gray-200'
+              }`}
+              aria-label="Passer en Français"
+            >
+              FR
+            </button>
+          </div>
+
+          <button
+            id="mobile-menu-toggle"
+            onClick={() => setIsOpen(!isOpen)}
+            className="text-gray-300 hover:text-purple-400 p-2 transition-colors cursor-pointer"
+            aria-label="Toggle navigation menu"
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu Dropdown */}
@@ -51,14 +83,14 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden fixed top-16 left-0 right-0 bg-[#060311] border-b border-purple-950/80 z-40 px-8 py-6 flex flex-col gap-6 shadow-2xl"
+            className="md:hidden fixed top-16 left-0 right-0 bg-[#03000a] border-b border-purple-950/80 z-40 px-8 py-6 flex flex-col gap-6 shadow-2xl"
           >
             <div className="flex flex-col gap-4">
-              {NAV_ITEMS.map((item) => (
+              {navItems.map((item) => (
                 <button
                   key={item.id}
                   onClick={() => handleLinkClick(item.id)}
-                  className={`text-left py-2 font-display text-base tracking-wide transition-colors ${
+                  className={`text-left py-2 font-display text-base tracking-wide transition-colors cursor-pointer ${
                     activeSection === item.id
                       ? 'text-purple-400 font-medium'
                       : 'text-gray-400 hover:text-gray-200'
@@ -67,6 +99,38 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
                   {item.label}
                 </button>
               ))}
+            </div>
+
+            <div className="h-[1px] bg-purple-950/50 w-full" />
+
+            {/* Language Switcher inside Mobile Drawer */}
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-xs text-gray-400 flex items-center gap-1.5">
+                <Globe size={14} className="text-purple-400" />
+                <span>Language / Langue:</span>
+              </span>
+              <div className="inline-flex items-center bg-[#070214] border border-purple-900/50 rounded-lg p-0.5">
+                <button
+                  onClick={() => setLanguage('en')}
+                  className={`px-3 py-1 rounded text-xs font-mono font-medium transition-colors cursor-pointer ${
+                    language === 'en'
+                      ? 'bg-purple-600 text-white'
+                      : 'text-gray-400'
+                  }`}
+                >
+                  English (EN)
+                </button>
+                <button
+                  onClick={() => setLanguage('fr')}
+                  className={`px-3 py-1 rounded text-xs font-mono font-medium transition-colors cursor-pointer ${
+                    language === 'fr'
+                      ? 'bg-purple-600 text-white'
+                      : 'text-gray-400'
+                  }`}
+                >
+                  Français (FR)
+                </button>
+              </div>
             </div>
 
             <div className="h-[1px] bg-purple-950/50 w-full" />
@@ -113,9 +177,9 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
       {/* Desktop Sidebar */}
       <aside
         id="desktop-sidebar"
-        className="hidden md:flex fixed top-0 left-0 h-screen w-80 bg-[#04010b] border-r border-purple-950/20 px-10 py-12 flex-col justify-between z-30 select-none"
+        className="hidden md:flex fixed top-0 left-0 h-screen w-80 bg-transparent border-r border-purple-950/20 px-10 py-10 flex-col justify-between z-30 select-none overflow-y-auto scrollbar-none"
       >
-        {/* Top: Branding */}
+        {/* Top: Branding & Language Switcher */}
         <div className="flex flex-col gap-2">
           <button
             onClick={() => onNavigate('intro')}
@@ -124,31 +188,68 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
             GIFT NNEJI
           </button>
           <span className="font-mono text-xs text-purple-400/80 tracking-wider">
-            FULL STACK DEVELOPER
+            {t('sidebar.role')}
           </span>
-          <p className="text-gray-500 text-xs mt-4 leading-relaxed max-w-[210px]">
-            Product-minded engineer crafting secure, real-time, and AI-enabled digital ecosystems.
+          <p className="text-gray-500 text-xs mt-3 leading-relaxed max-w-[210px]">
+            {t('sidebar.tagline')}
           </p>
+
+          {/* Desktop Language Switcher */}
+          <div className="flex items-center gap-2.5 mt-3 pt-3 border-t border-purple-950/30">
+            <div className="flex items-center gap-1.5 text-xs text-gray-400 font-mono">
+              <Globe size={13} className="text-purple-400" />
+              <span>Lang:</span>
+            </div>
+            <div className="inline-flex items-center bg-[#070214] border border-purple-900/50 rounded-lg p-0.5 shadow-inner">
+              <button
+                onClick={() => setLanguage('en')}
+                className={`px-2.5 py-1 rounded-md text-[11px] font-mono font-medium transition-all duration-200 cursor-pointer ${
+                  language === 'en'
+                    ? 'bg-purple-600 text-white shadow-[0_0_12px_rgba(147,51,234,0.4)]'
+                    : 'text-gray-400 hover:text-gray-200 hover:bg-purple-950/30'
+                }`}
+                aria-label="Switch to English"
+              >
+                EN
+              </button>
+              <button
+                onClick={() => setLanguage('fr')}
+                className={`px-2.5 py-1 rounded-md text-[11px] font-mono font-medium transition-all duration-200 cursor-pointer ${
+                  language === 'fr'
+                    ? 'bg-purple-600 text-white shadow-[0_0_12px_rgba(147,51,234,0.4)]'
+                    : 'text-gray-400 hover:text-gray-200 hover:bg-purple-950/30'
+                }`}
+                aria-label="Passer en Français"
+              >
+                FR
+              </button>
+            </div>
+            <span className="text-[10px] font-mono text-purple-400/70 uppercase">
+              {language === 'en' ? 'English' : 'Français'}
+            </span>
+          </div>
         </div>
 
         {/* Center: Connective Tree Navigation */}
-        <nav className="relative flex flex-col gap-8 pl-4 py-8">
+        <nav className="relative flex flex-col gap-7 pl-4 py-6">
           {/* Vertical continuous line */}
           <div className="absolute left-0 top-3 bottom-3 w-[2px] bg-purple-950/30" />
 
           {/* Active track filling */}
           <div className="absolute left-0 top-3 bottom-3 w-[2px] overflow-hidden">
             <motion.div
-              className="w-full bg-gradient-to-b from-purple-500 via-violet-600 to-indigo-500 origin-top"
+              className="w-full bg-purple-500 origin-top"
               initial={{ scaleY: 0 }}
               animate={{
                 scaleY:
                   activeSection === 'intro'
                     ? 0.1
                     : activeSection === 'about'
-                    ? 0.4
+                    ? 0.32
                     : activeSection === 'experience'
-                    ? 0.7
+                    ? 0.55
+                    : activeSection === 'projects'
+                    ? 0.78
                     : 1,
               }}
               transition={{ type: 'spring', stiffness: 80, damping: 15 }}
@@ -156,7 +257,7 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
             />
           </div>
 
-          {NAV_ITEMS.map((item, idx) => {
+          {navItems.map((item) => {
             const isActive = activeSection === item.id;
             return (
               <button
@@ -208,7 +309,7 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
         </nav>
 
         {/* Bottom: Contact & Social Info */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-5">
           <div className="flex items-center gap-4 text-gray-500">
             <a
               href="https://github.com/giftchisom"

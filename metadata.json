@@ -1,6 +1,6 @@
 {
   "name": "Gift Chisom Portfolio",
-  "description": "Sleek personal portfolio of Gift Chisom Nneji, a Full-Stack Web Developer and Product Engineer.",
+  "description": "Modern light-themed portfolio for Gift Chisom Nneji, featuring an interactive side-scrolling 3D world globe, bento layout, and product showcases.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -2,23 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { 
   Github, 
   ExternalLink, 
-  Activity, 
-  Users, 
-  Mic, 
-  Calendar, 
-  Heart, 
-  Shield, 
-  CheckCircle,
-  Clock,
   ZoomIn,
   X
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { PROJECTS } from '../data';
+import { useLanguage } from '../context/LanguageContext';
 // @ts-ignore
 import santeflowImg from '../assets/images/santeflow.png';
 // @ts-ignore
 import iunImg from '../assets/images/iun_centralized.png';
+// @ts-ignore
+import portfolioImg from '../assets/images/portfolio_mockup.svg';
 
 interface SelectedImage {
   src: string;
@@ -27,6 +22,7 @@ interface SelectedImage {
 }
 
 export default function Projects() {
+  const { language, t } = useLanguage();
   const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(null);
 
   // Prevent background scrolling when modal is open
@@ -44,29 +40,36 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="py-24 px-6 md:px-16 lg:px-24 xl:px-32 bg-[#04010b]/60 border-t border-purple-950/10"
+      className="py-24 px-6 md:px-16 lg:px-24 xl:px-32 bg-transparent border-t border-purple-950/15"
     >
-      <div className="max-w-5xl flex flex-col gap-12">
+      <div className="max-w-5xl flex flex-col gap-10">
         
         {/* Section Heading */}
         <div className="flex flex-col gap-3">
-          <span className="font-mono text-xs text-purple-400 uppercase tracking-widest font-medium">03. Portfolios of Work</span>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">Featured Projects</h2>
-          <div className="h-[2px] w-16 bg-gradient-to-r from-purple-500 to-violet-600 rounded" />
+          <span className="font-mono text-xs text-purple-400 uppercase tracking-widest font-medium">
+            {t('proj.badge')}
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">
+            {t('proj.title')}
+          </h2>
+          <div className="h-[2px] w-16 bg-purple-500 rounded" />
         </div>
 
         {/* Projects Grid */}
-        <div className="flex flex-col gap-16">
+        <div className="flex flex-col gap-8">
           {PROJECTS.map((project, idx) => {
             const isEven = idx % 2 === 0;
+            const projectRole = (language === 'fr' && project.roleFr) ? project.roleFr : project.role;
+            const projectDuration = (language === 'fr' && project.durationFr) ? project.durationFr : project.duration;
+            const projectDescription = (language === 'fr' && project.descriptionFr) ? project.descriptionFr : project.description;
 
             return (
               <div 
                 key={project.id}
-                className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#070412]/40 border border-purple-950/20 hover:border-purple-800/20 p-6 sm:p-8 rounded-2xl transition-all duration-300"
+                className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-[#070412]/40 border border-purple-950/20 hover:border-purple-800/30 p-6 sm:p-7 rounded-2xl transition-all duration-300"
               >
                 
-                {/* Visual Live CSS Mockup Column */}
+                {/* Visual Live Mockup Column */}
                 <div className={`lg:col-span-5 ${isEven ? 'lg:order-1' : 'lg:order-2'} flex justify-center`}>
                   <div className={`w-full max-w-[340px] aspect-[4/3] bg-black/60 border border-purple-950/40 rounded-xl overflow-hidden relative shadow-lg flex flex-col justify-between group ${
                     (project.demoMockupType === 'santeflow' || project.demoMockupType === 'iun') ? 'p-0' : 'p-4'
@@ -106,7 +109,7 @@ export default function Projects() {
                         <div className="absolute inset-0 bg-purple-950/40 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[1px]">
                           <div className="bg-zinc-950/90 border border-purple-500/30 p-2 sm:p-2.5 rounded-full text-white shadow-xl flex items-center gap-1.5 transform scale-90 group-hover/img:scale-100 transition-transform duration-300">
                             <ZoomIn size={14} className="text-purple-400" />
-                            <span className="text-[10px] font-mono uppercase tracking-wider pr-1">View Full Photo</span>
+                            <span className="text-[10px] font-mono uppercase tracking-wider pr-1">{t('proj.viewFull')}</span>
                           </div>
                         </div>
                       </button>
@@ -117,141 +120,148 @@ export default function Projects() {
                       <button 
                         onClick={() => setSelectedImage({
                           src: iunImg,
-                          title: "IUN Centralized Communication & Resource Network",
-                          desc: "Exclusively designed resource-sharing and collaborative network for staff and students."
+                          title: "IUN Centralized Communication & Resource Network (Applied Research)",
+                          desc: "Applied systems research and full-stack engineering solving campus information bottlenecks, eliminating syllabus loss and connecting 500+ students and faculty."
                         })}
                         className="w-full h-full relative overflow-hidden cursor-zoom-in group/img border-0 p-0 m-0 bg-transparent block"
                       >
                         <img 
                           src={iunImg} 
-                          alt="IUN Centralized Communication Network"
+                          alt="IUN Network Showcase"
                           className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
                           referrerPolicy="no-referrer"
                         />
                         <div className="absolute inset-0 bg-purple-950/40 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[1px]">
                           <div className="bg-zinc-950/90 border border-purple-500/30 p-2 sm:p-2.5 rounded-full text-white shadow-xl flex items-center gap-1.5 transform scale-90 group-hover/img:scale-100 transition-transform duration-300">
                             <ZoomIn size={14} className="text-purple-400" />
-                            <span className="text-[10px] font-mono uppercase tracking-wider pr-1">View Full Photo</span>
+                            <span className="text-[10px] font-mono uppercase tracking-wider pr-1">{t('proj.viewFull')}</span>
                           </div>
                         </div>
                       </button>
                     )}
 
-                    {/* AI Voice Agent Mockup */}
+                    {/* Voice Agent Mockup */}
                     {project.demoMockupType === 'voiceagent' && (
-                      <div className="flex-1 flex flex-col gap-2.5 justify-center items-center">
-                        <div className="relative w-14 h-14 rounded-full bg-purple-900/20 border-2 border-purple-500/40 flex items-center justify-center">
-                          <Mic size={20} className="text-purple-300 animate-pulse" />
-                          <div className="absolute inset-0 rounded-full border border-purple-400/20 animate-ping" />
+                      <div className="flex-1 flex flex-col items-center justify-center gap-3 py-3">
+                        <div className="w-14 h-14 rounded-full bg-purple-700 flex items-center justify-center text-white shadow-[0_0_25px_rgba(147,51,234,0.4)] animate-pulse">
+                          <span className="font-mono text-xs font-bold">AI</span>
                         </div>
-                        
-                        <div className="flex flex-col items-center gap-1 text-center">
-                          <span className="font-display font-medium text-[10px] text-white">LiveKit Voice Stream</span>
-                          <span className="font-mono text-[8px] text-green-400">LATENCY: 120ms • MULTILINGUAL</span>
+                        <div className="flex items-center gap-1">
+                          <div className="w-1 h-3 bg-purple-400 animate-pulse rounded" />
+                          <div className="w-1 h-5 bg-indigo-400 animate-pulse delay-75 rounded" />
+                          <div className="w-1 h-2 bg-violet-400 animate-pulse delay-150 rounded" />
+                          <div className="w-1 h-6 bg-purple-300 animate-pulse delay-200 rounded" />
+                          <div className="w-1 h-3 bg-indigo-400 animate-pulse rounded" />
                         </div>
-
-                        {/* Audio wave simulation */}
-                        <div className="flex items-center gap-1 h-5 pt-1">
-                          <div className="w-[3px] bg-purple-500/60 rounded h-2 animate-[bounce_0.8s_infinite]" />
-                          <div className="w-[3px] bg-purple-400 rounded h-4 animate-[bounce_0.5s_infinite_delay-100]" />
-                          <div className="w-[3px] bg-purple-300 rounded h-3 animate-[bounce_0.6s_infinite_delay-200]" />
-                          <div className="w-[3px] bg-violet-400 rounded h-5 animate-[bounce_0.7s_infinite_delay-300]" />
-                          <div className="w-[3px] bg-indigo-500 rounded h-2 animate-[bounce_0.4s_infinite_delay-150]" />
-                        </div>
+                        <span className="font-mono text-[8px] text-purple-300/80">WebRTC LiveKit Stream</span>
                       </div>
                     )}
 
-                    {/* Portfolio Mockup */}
+                    {/* Portfolio Mockup on iPad Air 4 */}
                     {project.demoMockupType === 'portfolio' && (
-                      <div className="flex-1 flex flex-col gap-2 justify-center items-center p-1.5 w-full">
-                        {/* Mockup Sidebar/Main area */}
-                        <div className="w-full flex gap-1.5 items-stretch flex-1 min-h-[100px]">
-                          {/* Mini Sidebar representation */}
-                          <div className="w-[28%] bg-purple-950/20 border border-purple-900/30 rounded-lg p-1.5 flex flex-col gap-2 justify-between">
-                            <div className="flex flex-col gap-1">
-                              <div className="w-6 h-1 bg-purple-400/80 rounded" />
-                              <div className="w-4 h-0.5 bg-gray-700 rounded mt-1" />
-                              <div className="w-5 h-0.5 bg-gray-700 rounded" />
-                              <div className="w-3.5 h-0.5 bg-gray-700 rounded" />
-                            </div>
-                            <div className="flex gap-1 justify-center">
-                              <div className="w-1.5 h-1.5 rounded-full bg-purple-500/55" />
-                              <div className="w-1.5 h-1.5 rounded-full bg-purple-500/55" />
-                              <div className="w-1.5 h-1.5 rounded-full bg-purple-500/55" />
-                            </div>
-                          </div>
-                          {/* Mini Main content representation */}
-                          <div className="flex-1 bg-zinc-950/50 border border-purple-950/30 rounded-lg p-2 flex flex-col justify-between">
-                            <div className="flex flex-col gap-1">
-                              <div className="w-12 h-1.5 bg-white/90 rounded" />
-                              <div className="w-16 h-1 bg-purple-400/50 rounded" />
-                              <div className="flex gap-1 mt-1">
-                                <div className="w-3 h-1 bg-gray-800 rounded" />
-                                <div className="w-4 h-1 bg-gray-800 rounded" />
-                                <div className="w-2.5 h-1 bg-gray-800 rounded" />
-                              </div>
-                            </div>
-                            {/* Rotating planet or orb in mockup */}
-                            <div className="self-end relative w-8 h-8 rounded-full border border-dashed border-purple-500/25 flex items-center justify-center animate-[spin_8s_linear_infinite]">
-                              <div className="w-2.5 h-2.5 rounded-full bg-gradient-to-r from-purple-500 to-indigo-500 shadow-[0_0_6px_rgba(168,85,247,0.4)]" />
-                            </div>
+                      <button 
+                        onClick={() => setSelectedImage({
+                          src: portfolioImg,
+                          title: "Interactive Developer Portfolio on iPad",
+                          desc: "Responsive personal portfolio featuring dark-ambient physics, live audio, and modular showcases."
+                        })}
+                        className="w-full h-full relative overflow-hidden cursor-zoom-in group/img border-0 p-0 m-0 bg-transparent block"
+                      >
+                        <img 
+                          src={portfolioImg} 
+                          alt="Interactive Developer Portfolio on iPad"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover/img:scale-105"
+                          referrerPolicy="no-referrer"
+                        />
+                        <div className="absolute inset-0 bg-purple-950/40 opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[1px]">
+                          <div className="bg-zinc-950/90 border border-purple-500/30 p-2 sm:p-2.5 rounded-full text-white shadow-xl flex items-center gap-1.5 transform scale-90 group-hover/img:scale-100 transition-transform duration-300">
+                            <ZoomIn size={14} className="text-purple-400" />
+                            <span className="text-[10px] font-mono uppercase tracking-wider pr-1">{t('proj.viewFull')}</span>
                           </div>
                         </div>
-                        <div className="text-center mt-0.5">
-                          <span className="font-display font-medium text-[9px] text-white leading-none block">Gift Nneji Portfolio</span>
-                          <span className="font-mono text-[7px] text-purple-400 uppercase tracking-wider block">Self-Reflective Application</span>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Bottom stats block */}
-                    {project.demoMockupType !== 'santeflow' && project.demoMockupType !== 'iun' && (
-                      <div className="flex items-center justify-between border-t border-purple-950/30 pt-1.5 mt-1">
-                        <span className="font-mono text-[7px] text-purple-400/80 uppercase tracking-widest font-medium">
-                          SYSTEM OK
-                        </span>
-                        <span className="font-mono text-[7px] text-gray-500">
-                          LATENCY: 0ms
-                        </span>
-                      </div>
+                      </button>
                     )}
 
                   </div>
                 </div>
 
-                {/* Project Description Column */}
-                <div className={`lg:col-span-7 ${isEven ? 'lg:order-2' : 'lg:order-1'} flex flex-col gap-5`}>
+                {/* Project Description Column - Clean, Crisp & Uncluttered */}
+                <div className={`lg:col-span-7 ${isEven ? 'lg:order-2' : 'lg:order-1'} flex flex-col gap-4`}>
                   
                   {/* Meta details */}
                   <div className="flex flex-col gap-1">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-mono text-[10px] text-purple-400 uppercase tracking-widest font-semibold bg-purple-950/20 border border-purple-900/25 px-2 py-0.5 rounded-md">
-                        {project.duration}
+                      <span className="font-mono text-[10px] text-purple-400 uppercase tracking-widest font-semibold bg-purple-950/20 border border-purple-900/25 px-2.5 py-0.5 rounded-md">
+                        {projectDuration}
                       </span>
                       <span className="font-mono text-[10px] text-gray-500">
-                        Role: {project.role}
+                        {t('proj.role')}: {projectRole}
                       </span>
                     </div>
-                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-tight mt-1">
+                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-tight mt-0.5">
                       {project.title}
                     </h3>
                   </div>
 
-                  {/* Bullet points mapping */}
-                  <div className="flex flex-col gap-3">
-                    {project.description.map((bullet, idx) => (
-                      <p key={idx} className="text-gray-400 text-xs sm:text-sm leading-relaxed">
-                        {bullet}
+                  {/* Concise Description */}
+                  <div className="flex flex-col gap-2">
+                    {projectDescription.map((desc, i) => (
+                      <p key={i} className="text-gray-300 text-xs sm:text-sm leading-relaxed">
+                        {desc}
                       </p>
                     ))}
                   </div>
 
-                  {/* Tech stack badges */}
-                  <div className="flex flex-wrap gap-2 pt-2">
+                  {/* Research & Problem-Solving Work Breakdown */}
+                  {project.researchDetails && (
+                    <div className="p-3.5 sm:p-4 rounded-xl bg-[#0a0518]/90 border border-purple-900/40 flex flex-col gap-2.5 text-xs my-0.5">
+                      <div className="flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                        <span className="font-mono text-[10px] text-cyan-300 font-semibold tracking-wider uppercase">
+                          {language === 'fr' ? (project.researchDetails.badgeFr || project.researchDetails.badge) : project.researchDetails.badge}
+                        </span>
+                      </div>
+
+                      <div className="grid grid-cols-1 gap-2 pt-0.5">
+                        {/* Problem */}
+                        <div className="flex items-start gap-2.5 bg-[#05020d]/80 p-2.5 rounded-lg border border-red-950/40">
+                          <span className="font-mono text-[9px] uppercase px-1.5 py-0.5 rounded bg-red-950/70 text-red-300 font-bold shrink-0 mt-0.5">
+                            {language === 'fr' ? 'Problème Identifié' : 'Identified Problem'}
+                          </span>
+                          <p className="text-gray-300 text-[11px] sm:text-xs leading-relaxed">
+                            {language === 'fr' ? (project.researchDetails.problemFr || project.researchDetails.problem) : project.researchDetails.problem}
+                          </p>
+                        </div>
+
+                        {/* Methodology / Research */}
+                        <div className="flex items-start gap-2.5 bg-[#05020d]/80 p-2.5 rounded-lg border border-purple-950/40">
+                          <span className="font-mono text-[9px] uppercase px-1.5 py-0.5 rounded bg-purple-950/70 text-purple-300 font-bold shrink-0 mt-0.5">
+                            {language === 'fr' ? 'Méthodologie & Recherche' : 'Field Research & Architecture'}
+                          </span>
+                          <p className="text-gray-300 text-[11px] sm:text-xs leading-relaxed">
+                            {language === 'fr' ? (project.researchDetails.methodologyFr || project.researchDetails.methodology) : project.researchDetails.methodology}
+                          </p>
+                        </div>
+
+                        {/* Solution & Impact */}
+                        <div className="flex items-start gap-2.5 bg-[#05020d]/80 p-2.5 rounded-lg border border-emerald-950/40">
+                          <span className="font-mono text-[9px] uppercase px-1.5 py-0.5 rounded bg-emerald-950/70 text-emerald-300 font-bold shrink-0 mt-0.5">
+                            {language === 'fr' ? 'Solution & Impact' : 'Solved Outcome & Impact'}
+                          </span>
+                          <p className="text-gray-300 text-[11px] sm:text-xs leading-relaxed">
+                            {language === 'fr' ? (project.researchDetails.solutionFr || project.researchDetails.solution) : project.researchDetails.solution}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Tech stack badges - 3-4 top badges */}
+                  <div className="flex flex-wrap gap-1.5 pt-1">
                     {project.tags.map((tag) => (
                       <span 
                         key={tag}
-                        className="font-mono text-[10px] text-gray-300 bg-[#090514] border border-purple-950/80 px-2.5 py-1 rounded-md"
+                        className="font-mono text-[10px] text-gray-300 bg-[#090514] border border-purple-950/80 px-2 py-0.5 rounded-md"
                       >
                         {tag}
                       </span>
@@ -259,7 +269,7 @@ export default function Projects() {
                   </div>
 
                   {/* Navigation Links */}
-                  <div className="flex items-center gap-4 pt-3 text-sm">
+                  <div className="flex items-center gap-4 pt-2 text-sm">
                     {project.githubUrl && (
                       <a 
                         href={project.githubUrl}
@@ -269,7 +279,7 @@ export default function Projects() {
                         title="View GitHub Repository"
                       >
                         <Github size={14} />
-                        GitHub
+                        {t('proj.github')}
                       </a>
                     )}
                     
@@ -282,7 +292,7 @@ export default function Projects() {
                         title="View Live Application"
                       >
                         <ExternalLink size={14} />
-                        Live Link
+                        {t('proj.live')}
                       </a>
                     )}
                   </div>

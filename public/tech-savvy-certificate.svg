@@ -1,0 +1,157 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 848" width="1200" height="848">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="100%" stop-color="#f8fafc" />
+    </linearGradient>
+
+    <!-- Gold Medal Gradient -->
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde047" />
+      <stop offset="30%" stop-color="#eab308" />
+      <stop offset="70%" stop-color="#ca8a04" />
+      <stop offset="100%" stop-color="#a16207" />
+    </linearGradient>
+
+    <linearGradient id="gold-bright" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#eab308" />
+      <stop offset="100%" stop-color="#854d0e" />
+    </linearGradient>
+
+    <!-- Blue Wing Gradient -->
+    <linearGradient id="blue-wing" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1d4ed8" />
+      <stop offset="100%" stop-color="#2563eb" />
+    </linearGradient>
+
+    <!-- Facet Shadow -->
+    <linearGradient id="facet-shadow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#cbd5e1" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#94a3b8" stop-opacity="0.4" />
+    </linearGradient>
+  </defs>
+
+  <!-- Certificate Canvas Base -->
+  <rect width="1200" height="848" fill="url(#bg)" />
+
+  <!-- Top Geometric Header -->
+  <!-- Top Gray/Slate Facet Layer -->
+  <polygon points="0,0 1200,0 1200,310 600,230 0,310" fill="url(#facet-shadow)" />
+
+  <!-- Top Dark Blue/Black Central Crest -->
+  <polygon points="0,0 1200,0 1200,240 600,160 0,240" fill="#090d16" />
+
+  <!-- Blue Dynamic Accent Chevrons (Top Left & Top Right) -->
+  <polygon points="0,110 600,160 600,180 0,130" fill="#2563eb" />
+  <polygon points="1200,110 600,160 600,180 1200,130" fill="#2563eb" />
+  <polygon points="0,110 0,130 600,180 600,160" fill="#3b82f6" />
+  <polygon points="1200,110 1200,130 600,180 600,160" fill="#3b82f6" />
+
+  <!-- Bottom Blue Accent Chevron -->
+  <polygon points="0,770 600,820 1200,770 1200,848 0,848" fill="#1e3a8a" />
+  <polygon points="0,770 600,820 1200,770 1200,800 600,848 0,800" fill="#2563eb" />
+
+  <!-- CERTIFICATE TITLE -->
+  <g text-anchor="middle">
+    <text x="600" y="115" font-family="'Cinzel', 'Times New Roman', serif" font-size="44" font-weight="900" fill="#ffffff" letter-spacing="4">
+      CERTIFICATE
+    </text>
+    <text x="600" y="152" font-family="'Cinzel', 'Times New Roman', serif" font-size="22" font-weight="600" fill="#ffffff" letter-spacing="6">
+      OF VOLUNTEERING
+    </text>
+  </g>
+
+  <!-- GOLD RIBBON & MEDAL (Center) -->
+  <g transform="translate(600, 260)">
+    <!-- Ribbon Tails -->
+    <path d="M-22,15 L-32,65 L-12,52 L8,65 L-2,15 Z" fill="#b45309" opacity="0.9" />
+    <path d="M22,15 L32,65 L12,52 L-8,65 L2,15 Z" fill="#b45309" opacity="0.9" />
+    <path d="M-18,15 L-26,60 L-10,48 L6,60 L-2,15 Z" fill="url(#gold)" />
+    <path d="M18,15 L26,60 L10,48 L-6,60 L2,15 Z" fill="url(#gold)" />
+
+    <!-- Scalloped Gold Medal Rosette -->
+    <g>
+      <!-- Radiating starburst rosette teeth -->
+      <circle cx="0" cy="0" r="42" fill="url(#gold)" />
+      <!-- Starburst points around medal -->
+      <path d="M0,-46 L6,-42 L13,-45 L17,-39 L25,-39 L27,-32 L35,-29 L34,-22 L41,-17 L38,-10 L44,-4 L39,2 L43,9 L36,15 L38,22 L30,27 L30,34 L22,37 L20,44 L12,45 L8,51 L0,50 L-8,51 L-12,45 L-20,44 L-22,37 L-30,34 L-30,27 L-38,22 L-36,15 L-43,9 L-39,2 L-44,-4 L-38,-10 L-41,-17 L-34,-22 L-35,-29 L-27,-32 L-25,-39 L-17,-39 L-13,-45 L-6,-42 Z" fill="url(#gold)" />
+      <!-- Inner circular rings -->
+      <circle cx="0" cy="0" r="34" fill="url(#gold-bright)" stroke="#ca8a04" stroke-width="2" />
+      <circle cx="0" cy="0" r="28" fill="none" stroke="#fef08a" stroke-width="1.5" stroke-dasharray="3,2" />
+      <circle cx="0" cy="0" r="24" fill="url(#gold)" />
+    </g>
+  </g>
+
+  <!-- BODY CONTENT -->
+  <g text-anchor="middle">
+    <!-- Intro line -->
+    <text x="600" y="380" font-family="'Montserrat', sans-serif" font-size="17" font-weight="600" fill="#1e293b" letter-spacing="4">
+      THIS CERTIFICATE IS PRESENTED TO
+    </text>
+
+    <!-- Recipient Name -->
+    <text x="600" y="455" font-family="'Cinzel', 'Playfair Display', serif" font-size="44" font-weight="700" fill="#b45309" letter-spacing="1">
+      Nneji Gift
+    </text>
+
+    <!-- Name Underline Accent -->
+    <line x1="280" y1="478" x2="920" y2="478" stroke="#ca8a04" stroke-width="1.5" opacity="0.8" />
+
+    <!-- Appreciation Paragraph -->
+    <text x="600" y="525" font-family="'Open Sans', sans-serif" font-size="18" fill="#334155" font-weight="400">
+      In recognition of your dedication and valuable contribution
+    </text>
+    <text x="600" y="555" font-family="'Open Sans', sans-serif" font-size="18" fill="#334155">
+      as a <tspan font-weight="700" fill="#0f172a">Volunteer</tspan> at the Tech Savvy Summit 2026.
+    </text>
+    <text x="600" y="585" font-family="'Open Sans', sans-serif" font-size="18" fill="#334155" font-weight="400">
+      Your commitment and support contributed greatly to the success of this event.
+    </text>
+    <text x="600" y="612" font-family="'Open Sans', sans-serif" font-size="18" fill="#334155" font-weight="400">
+      We sincerely appreciate your service.
+    </text>
+  </g>
+
+  <!-- FOOTER: SIGNATURE & SEAL -->
+  <!-- Left: Founder Signature -->
+  <g transform="translate(480, 715)">
+    <!-- Signature drawing -->
+    <path d="M-60,-22 C-50,-40 -35,-8 -20,-28 C-5,-45 5,-10 15,-20 C25,-30 40,-15 50,-22" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linecap="round" />
+    <line x1="-100" y1="0" x2="100" y2="0" stroke="#64748b" stroke-width="1.2" />
+    <text x="0" y="24" text-anchor="middle" font-family="'Montserrat', sans-serif" font-size="16" font-weight="700" fill="#0f172a" letter-spacing="1">
+      STEPHEN UDEH
+    </text>
+    <text x="0" y="44" text-anchor="middle" font-family="'Open Sans', sans-serif" font-size="13" font-weight="500" fill="#475569">
+      Founder, Tech Savvy Summit
+    </text>
+  </g>
+
+  <!-- Right: Official Blue Badge / Stamp -->
+  <g transform="translate(910, 700)">
+    <!-- Scalloped circular blue stamp -->
+    <circle cx="0" cy="0" r="54" fill="#0284c7" stroke="#0369a1" stroke-width="3" />
+    <circle cx="0" cy="0" r="48" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="4,2" />
+    
+    <!-- Circular Stamp Text -->
+    <path id="stamp-arc" d="M -38,0 A 38,38 0 1,1 38,0" fill="none" stroke="none" />
+    <text font-family="'Montserrat', sans-serif" font-size="8.5" font-weight="800" fill="#ffffff" letter-spacing="2.5">
+      <textPath href="#stamp-arc" startOffset="50%" text-anchor="middle">
+        TECH SAVVY SUMMIT
+      </textPath>
+    </text>
+
+    <!-- Stepped blocks TSS icon in center -->
+    <g fill="#ffffff" transform="translate(-16, -10)">
+      <rect x="0" y="14" width="10" height="8" rx="1.5" />
+      <rect x="12" y="7" width="10" height="15" rx="1.5" />
+      <rect x="24" y="0" width="10" height="22" rx="1.5" />
+    </g>
+
+    <!-- Subtext bottom of stamp -->
+    <text x="0" y="32" text-anchor="middle" font-family="'Montserrat', sans-serif" font-size="6.5" font-weight="700" fill="#bae6fd" letter-spacing="1">
+      OFFICIAL SEAL
+    </text>
+  </g>
+</svg>
