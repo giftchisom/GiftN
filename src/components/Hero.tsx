@@ -137,7 +137,7 @@ export default function Hero({ onNavigate }: HeroProps) {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="font-display text-2xl sm:text-3xl font-medium text-gray-300 tracking-tight"
             >
-              {language === 'fr' ? 'Développeur Logiciel Full-Stack & Spécialiste IA' : 'Full-Stack Software Developer & AI Specialist'}
+              {language === 'fr' ? 'Développeur Logiciel Full-Stack & Developpeur IA' : 'Full-Stack Software Developer & AI Developer'}
             </motion.h2>
           </div>
 
