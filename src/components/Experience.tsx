@@ -3,6 +3,7 @@ import { Calendar, MapPin, ExternalLink } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { EXPERIENCES } from '../data';
 import { useLanguage } from '../context/LanguageContext';
+import HiddenGift from './HiddenGift';
 
 export default function Experience() {
   const { language, t } = useLanguage();
@@ -23,9 +24,12 @@ export default function Experience() {
         
         {/* Section Heading */}
         <div className="flex flex-col gap-3">
-          <span className="font-mono text-xs text-purple-400 uppercase tracking-widest font-medium">
-            {t('exp.badge')}
-          </span>
+          <div className="flex items-center justify-between">
+            <span className="font-mono text-xs text-purple-400 uppercase tracking-widest font-medium">
+              {t('exp.badge')}
+            </span>
+            <HiddenGift id={3} tooltipSide="left" />
+          </div>
           <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">
             {t('exp.title')}
           </h2>

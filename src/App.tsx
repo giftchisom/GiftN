@@ -1,5 +1,6 @@
 import React from 'react';
 import { LanguageProvider } from './context/LanguageContext';
+import { GiftHuntProvider } from './context/GiftHuntContext';
 import Sidebar from './components/Sidebar';
 import Hero from './components/Hero';
 import About from './components/About';
@@ -8,6 +9,7 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import MusicPlayer from './components/MusicPlayer';
 import GalaxyBackground from './components/GalaxyBackground';
+import CertificateModal from './components/CertificateModal';
 
 export default function App() {
   const [activeSection, setActiveSection] = React.useState('intro');
@@ -55,44 +57,49 @@ export default function App() {
 
   return (
     <LanguageProvider>
-      <div id="portfolio-root" className="min-h-screen bg-[#03000a] text-gray-100 flex flex-col md:flex-row relative">
-        
-        {/* Immersive Stars & Galaxy Canvas Background */}
-        <GalaxyBackground />
-
-        {/* Dynamic Nav Sidebar / Mobile Header */}
-        <Sidebar activeSection={activeSection} onNavigate={handleNavigate} />
-
-        {/* Main Content Area */}
-        <main 
-          id="main-content"
-          className="flex-1 md:pl-80 pt-16 md:pt-0 min-w-0 relative z-10"
-        >
-          <Hero onNavigate={handleNavigate} />
+      <GiftHuntProvider>
+        <div id="portfolio-root" className="min-h-screen bg-[#03000a] text-gray-100 flex flex-col md:flex-row relative">
           
-          <About />
-          
-          <Experience />
-          
-          <Projects />
+          {/* Immersive Stars & Galaxy Canvas Background */}
+          <GalaxyBackground />
 
-          <Contact onNavigate={handleNavigate} />
+          {/* Dynamic Nav Sidebar / Mobile Header */}
+          <Sidebar activeSection={activeSection} onNavigate={handleNavigate} />
 
-          {/* Minimalist Footnote */}
-          <footer className="py-12 px-6 md:px-16 lg:px-24 xl:px-32 bg-transparent border-t border-purple-950/20 text-center flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500 font-mono">
-            <div>
-              © {new Date().getFullYear()} Gift Nneji
-            </div>
-            <div className="text-purple-300/90 font-medium">
-              Built with 💜 by Gift N
-            </div>
-          </footer>
-        </main>
+          {/* Main Content Area */}
+          <main 
+            id="main-content"
+            className="flex-1 md:pl-80 pt-16 md:pt-0 min-w-0 relative z-10"
+          >
+            <Hero onNavigate={handleNavigate} />
+            
+            <About />
+            
+            <Experience />
+            
+            <Projects />
 
-        {/* Ambient Music Player */}
-        <MusicPlayer />
+            <Contact onNavigate={handleNavigate} />
 
-      </div>
+            {/* Minimalist Footnote */}
+            <footer className="py-12 px-6 md:px-16 lg:px-24 xl:px-32 bg-transparent border-t border-purple-950/20 text-center flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500 font-mono">
+              <div>
+                © {new Date().getFullYear()} Gift Nneji
+              </div>
+              <div className="text-purple-300/90 font-medium">
+                Built with 💜 by Gift N
+              </div>
+            </footer>
+          </main>
+
+          {/* Ambient Music Player */}
+          <MusicPlayer />
+
+          {/* Easter Egg Visitor Certificate Modal */}
+          <CertificateModal />
+
+        </div>
+      </GiftHuntProvider>
     </LanguageProvider>
   );
 }

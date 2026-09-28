@@ -14,6 +14,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
 import FloatingTechStack from './FloatingTechStack';
+import HiddenGift from './HiddenGift';
 import { 
   EDUCATION, 
   CERTIFICATIONS 
@@ -63,9 +64,12 @@ export default function About() {
           </div>
 
           <div className="lg:col-span-4 bg-[#090514]/60 p-6 rounded-xl border border-purple-950/30 flex flex-col gap-4 self-stretch justify-center">
-            <span className="font-mono text-xs uppercase tracking-wider text-purple-400 font-semibold flex items-center gap-2">
-              <Globe size={14} className="text-purple-400" /> Languages
-            </span>
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-xs uppercase tracking-wider text-purple-400 font-semibold flex items-center gap-2">
+                <Globe size={14} className="text-purple-400" /> Languages
+              </span>
+              <HiddenGift id={2} tooltipSide="left" />
+            </div>
             <div className="flex flex-col gap-3 text-sm">
               <div className="flex justify-between items-center text-gray-200 border-b border-purple-950/10 pb-2">
                 <span>English</span>

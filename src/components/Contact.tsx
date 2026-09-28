@@ -15,6 +15,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
+import HiddenGift from './HiddenGift';
 
 interface ContactProps {
   onNavigate?: (sectionId: string) => void;
@@ -249,30 +250,34 @@ export default function Contact({ onNavigate }: ContactProps) {
         <div className="bg-[#060111]/90 border border-purple-900/40 rounded-2xl p-6 sm:p-8 lg:p-10 shadow-2xl backdrop-blur-xl flex flex-col gap-8">
           
           {/* Tab Navigation */}
-          <div className="flex flex-wrap items-center gap-3 border-b border-purple-950/60 pb-6">
-            <button
-              onClick={() => setActiveTab('message')}
-              className={`flex items-center gap-2.5 px-5 py-2.5 rounded-xl font-mono text-xs tracking-wider uppercase transition-all duration-200 cursor-pointer ${
-                activeTab === 'message'
-                  ? 'bg-purple-600 text-white font-semibold shadow-[0_0_20px_rgba(147,51,234,0.3)]'
-                  : 'bg-purple-950/30 text-gray-400 hover:text-gray-200 hover:bg-purple-950/60'
-              }`}
-            >
-              <MessageSquare size={15} />
-              <span>{t('contact.tabMessage')}</span>
-            </button>
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-purple-950/60 pb-6">
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                onClick={() => setActiveTab('message')}
+                className={`flex items-center gap-2.5 px-5 py-2.5 rounded-xl font-mono text-xs tracking-wider uppercase transition-all duration-200 cursor-pointer ${
+                  activeTab === 'message'
+                    ? 'bg-purple-600 text-white font-semibold shadow-[0_0_20px_rgba(147,51,234,0.3)]'
+                    : 'bg-purple-950/30 text-gray-400 hover:text-gray-200 hover:bg-purple-950/60'
+                }`}
+              >
+                <MessageSquare size={15} />
+                <span>{t('contact.tabMessage')}</span>
+              </button>
 
-            <button
-              onClick={() => setActiveTab('calendar')}
-              className={`flex items-center gap-2.5 px-5 py-2.5 rounded-xl font-mono text-xs tracking-wider uppercase transition-all duration-200 cursor-pointer ${
-                activeTab === 'calendar'
-                  ? 'bg-purple-600 text-white font-semibold shadow-[0_0_20px_rgba(147,51,234,0.3)]'
-                  : 'bg-purple-950/30 text-gray-400 hover:text-gray-200 hover:bg-purple-950/60'
-              }`}
-            >
-              <CalendarIcon size={15} />
-              <span>{t('contact.tabCalendar')}</span>
-            </button>
+              <button
+                onClick={() => setActiveTab('calendar')}
+                className={`flex items-center gap-2.5 px-5 py-2.5 rounded-xl font-mono text-xs tracking-wider uppercase transition-all duration-200 cursor-pointer ${
+                  activeTab === 'calendar'
+                    ? 'bg-purple-600 text-white font-semibold shadow-[0_0_20px_rgba(147,51,234,0.3)]'
+                    : 'bg-purple-950/30 text-gray-400 hover:text-gray-200 hover:bg-purple-950/60'
+                }`}
+              >
+                <CalendarIcon size={15} />
+                <span>{t('contact.tabCalendar')}</span>
+              </button>
+            </div>
+
+            <HiddenGift id={5} tooltipSide="left" />
           </div>
 
           {/* TAB 1: Send Message Through Website (No Gmail Needed!) */}

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Github, Linkedin, Mail, Menu, X, Phone, Globe } from 'lucide-react';
+import { Github, Linkedin, Mail, Menu, X, Phone, Globe, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
+import { useGiftHunt } from '../context/GiftHuntContext';
 
 interface SidebarProps {
   activeSection: string;
@@ -11,6 +12,7 @@ interface SidebarProps {
 export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const { language, setLanguage, t } = useLanguage();
+  const { foundCount, totalGifts, isGiftFound, setIsCertificateOpen } = useGiftHunt();
 
   const navItems = [
     { id: 'intro', label: t('nav.intro') },
@@ -131,6 +133,53 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
                   Français (FR)
                 </button>
               </div>
+            </div>
+
+            {/* Mobile Easter Egg Tracker */}
+            <div className="p-3 rounded-xl bg-[#090317]/90 border border-purple-900/50 shadow-inner flex flex-col gap-2 w-full max-w-xs">
+              <div className="flex items-center justify-between text-[11px] font-mono">
+                <span className="text-purple-300 font-semibold flex items-center gap-1.5">
+                  <Sparkles size={11} className="text-amber-400" />
+                  {foundCount === totalGifts ? 'You found all 5.' : 'Psst… you missed something.'}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-xs text-amber-300 font-bold flex items-center gap-1">
+                  {foundCount}/{totalGifts} Gifts found 🎁
+                </span>
+                {foundCount === totalGifts ? (
+                  <button
+                    onClick={() => {
+                      setIsCertificateOpen(true);
+                      setIsOpen(false);
+                    }}
+                    className="px-2.5 py-1 rounded bg-purple-600 hover:bg-purple-500 text-white font-mono text-[10px] font-bold shadow-[0_0_10px_rgba(168,85,247,0.5)] cursor-pointer"
+                  >
+                    Certificate 📜
+                  </button>
+                ) : (
+                  <span className="text-[10px] font-mono text-gray-500">
+                    {foundCount === 0 ? 'Explore to find' : `${totalGifts - foundCount} left`}
+                  </span>
+                )}
+              </div>
+              <div className="flex items-center gap-1.5 mt-0.5">
+                {[1, 2, 3, 4, 5].map((idx) => (
+                  <div
+                    key={idx}
+                    className={`h-1.5 flex-1 rounded-full transition-all duration-500 ${
+                      isGiftFound(idx)
+                        ? 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]'
+                        : 'bg-purple-950/60 border border-purple-900/30'
+                    }`}
+                  />
+                ))}
+              </div>
+              {foundCount === totalGifts && (
+                <p className="text-[10px] text-amber-300/90 font-mono mt-0.5 leading-snug">
+                  Okay detective, you can have my mini certificate! *☺︎*
+                </p>
+              )}
             </div>
 
             <div className="h-[1px] bg-purple-950/50 w-full" />
@@ -307,6 +356,59 @@ export default function Sidebar({ activeSection, onNavigate }: SidebarProps) {
             );
           })}
         </nav>
+
+        {/* Easter Egg: "Can You Find Me?" Tracker */}
+        <div className="my-2 p-3 rounded-xl bg-[#090317]/85 border border-purple-900/40 shadow-inner flex flex-col gap-2">
+          <div className="flex items-center justify-between text-[11px] font-mono">
+            <span className="text-purple-300 font-semibold flex items-center gap-1.5">
+              <Sparkles size={11} className="text-amber-400" />
+              {foundCount === totalGifts ? 'You found all 5.' : 'Psst… you missed something.'}
+            </span>
+          </div>
+
+          <div className="flex items-center justify-between">
+            <span className="font-mono text-xs text-amber-300 font-bold flex items-center gap-1">
+              {foundCount}/{totalGifts} Gifts found 🎁
+            </span>
+
+            {foundCount === totalGifts ? (
+              <button
+                onClick={() => setIsCertificateOpen(true)}
+                className="px-2 py-0.5 rounded bg-purple-600 hover:bg-purple-500 text-white font-mono text-[10px] font-bold transition-all shadow-[0_0_10px_rgba(168,85,247,0.5)] cursor-pointer animate-pulse"
+              >
+                Certificate 📜
+              </button>
+            ) : (
+              <span className="text-[10px] font-mono text-gray-500">
+                {foundCount === 0 ? 'Explore to find' : `${totalGifts - foundCount} left`}
+              </span>
+            )}
+          </div>
+
+          {/* Progress dots */}
+          <div className="flex items-center gap-1.5 mt-0.5">
+            {[1, 2, 3, 4, 5].map((idx) => {
+              const isFound = isGiftFound(idx);
+              return (
+                <div
+                  key={idx}
+                  title={`Gift #${idx} ${isFound ? '(Found)' : '(Hidden)'}`}
+                  className={`h-1.5 flex-1 rounded-full transition-all duration-500 ${
+                    isFound
+                      ? 'bg-amber-400 shadow-[0_0_8px_rgba(251,191,36,0.8)]'
+                      : 'bg-purple-950/60 border border-purple-900/30'
+                  }`}
+                />
+              );
+            })}
+          </div>
+
+          {foundCount === totalGifts && (
+            <p className="text-[10px] text-amber-300/90 font-mono mt-0.5 leading-snug">
+              Okay detective, you can have my mini certificate! *☺︎*
+            </p>
+          )}
+        </div>
 
         {/* Bottom: Contact & Social Info */}
         <div className="flex flex-col gap-5">

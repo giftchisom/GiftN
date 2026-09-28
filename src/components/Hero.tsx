@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useLanguage } from '../context/LanguageContext';
+import HiddenGift from './HiddenGift';
 // @ts-ignore
 import profileImg from '../assets/profile.png';
 
@@ -147,9 +148,12 @@ export default function Hero({ onNavigate }: HeroProps) {
             transition={{ duration: 0.6, delay: 0.45 }}
             className="w-full max-w-md bg-[#090518]/70 border border-purple-950/45 rounded-xl p-4 shadow-[0_4px_30px_rgba(139,92,246,0.02)] backdrop-blur-md self-center md:self-start flex flex-col gap-2.5 overflow-hidden"
           >
-            <div className="flex items-center gap-2 text-[10px] font-mono text-purple-400 uppercase tracking-widest font-semibold">
-              <Sparkles size={11} className="animate-pulse" />
-              <span>{language === 'fr' ? 'Pionnières & Inventions' : 'Women Pioneers in Tech'}</span>
+            <div className="flex items-center justify-between text-[10px] font-mono text-purple-400 uppercase tracking-widest font-semibold">
+              <div className="flex items-center gap-2">
+                <Sparkles size={11} className="animate-pulse" />
+                <span>{language === 'fr' ? 'Pionnières & Inventions' : 'Women Pioneers in Tech'}</span>
+              </div>
+              <HiddenGift id={1} tooltipSide="bottom" />
             </div>
 
             <div className="min-h-[50px] relative flex items-start">

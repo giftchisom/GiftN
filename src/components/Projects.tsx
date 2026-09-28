@@ -8,6 +8,7 @@ import {
 import { motion, AnimatePresence } from 'motion/react';
 import { PROJECTS } from '../data';
 import { useLanguage } from '../context/LanguageContext';
+import HiddenGift from './HiddenGift';
 // @ts-ignore
 import santeflowImg from '../assets/images/santeflow.png';
 // @ts-ignore
@@ -46,9 +47,12 @@ export default function Projects() {
         
         {/* Section Heading */}
         <div className="flex flex-col gap-3">
-          <span className="font-mono text-xs text-purple-400 uppercase tracking-widest font-medium">
-            {t('proj.badge')}
-          </span>
+          <div className="flex items-center justify-between">
+            <span className="font-mono text-xs text-purple-400 uppercase tracking-widest font-medium">
+              {t('proj.badge')}
+            </span>
+            <HiddenGift id={4} tooltipSide="left" />
+          </div>
           <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white">
             {t('proj.title')}
           </h2>
