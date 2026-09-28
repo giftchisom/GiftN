@@ -1,4 +1,5 @@
 import React from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { LanguageProvider } from './context/LanguageContext';
 import { GiftHuntProvider } from './context/GiftHuntContext';
 import Sidebar from './components/Sidebar';
@@ -97,6 +98,9 @@ export default function App() {
 
           {/* Easter Egg Visitor Certificate Modal */}
           <CertificateModal />
+
+          {/* Vercel Web Analytics */}
+          <Analytics />
 
         </div>
       </GiftHuntProvider>
