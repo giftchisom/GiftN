@@ -59,17 +59,14 @@ export default function About() {
               I am a <strong className="text-purple-300">product-minded engineer</strong> with strong expertise in software design, development, and user-centered product strategy. I have a proven track record of building <strong className="text-purple-400">secure, real-time end-to-end solutions</strong>, from ideation and UI/UX design to scalable backend architecture.
             </p>
             <p>
-              As a <strong className="text-purple-300">tech lifestyle creator</strong>, I focus on building a vibrant community of like-minded individuals, bridging the gap between technical innovation, lifestyle curation, and shared personal growth.
+              As a <strong className="text-purple-300">tech lifestyle creator</strong>, I focus on building a vibrant community of like-minded individuals, bridging the gap between technical innovation, lifestyle curation, and shared personal growth. <HiddenGift id={2} />
             </p>
           </div>
 
           <div className="lg:col-span-4 bg-[#090514]/60 p-6 rounded-xl border border-purple-950/30 flex flex-col gap-4 self-stretch justify-center">
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-xs uppercase tracking-wider text-purple-400 font-semibold flex items-center gap-2">
-                <Globe size={14} className="text-purple-400" /> Languages
-              </span>
-              <HiddenGift id={2} tooltipSide="left" />
-            </div>
+            <span className="font-mono text-xs uppercase tracking-wider text-purple-400 font-semibold flex items-center gap-2">
+              <Globe size={14} className="text-purple-400" /> Languages
+            </span>
             <div className="flex flex-col gap-3 text-sm">
               <div className="flex justify-between items-center text-gray-200 border-b border-purple-950/10 pb-2">
                 <span>English</span>
