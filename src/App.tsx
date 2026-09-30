@@ -10,6 +10,7 @@ import Contact from './components/Contact';
 import MusicPlayer from './components/MusicPlayer';
 import GalaxyBackground from './components/GalaxyBackground';
 import CertificateModal from './components/CertificateModal';
+import { Analytics } from '@vercel/analytics/react';
 
 export default function App() {
   const [activeSection, setActiveSection] = React.useState('intro');
@@ -97,6 +98,9 @@ export default function App() {
 
           {/* Easter Egg Visitor Certificate Modal */}
           <CertificateModal />
+
+          {/* Vercel Web Analytics */}
+          <Analytics />
 
         </div>
       </GiftHuntProvider>
